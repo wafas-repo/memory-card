@@ -1,8 +1,10 @@
-import React from 'react'
+import Cards from './Cards'
+
 
 const PlayView = () => {
+    
   return (
-    <div>PlayView</div>
+    <Cards />
   )
 }
 
