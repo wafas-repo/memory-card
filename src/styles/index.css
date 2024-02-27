@@ -43,4 +43,30 @@ header {
     margin-right: 20px;
     text-transform: uppercase;
   }
+
+  .Board {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-gap: 2rem;
+
+        .image {
+            position: relative;
+        }
+
+        
+  }
+
+  .image img {
+        height: 90%;
+        width: 90%;
+  }
   

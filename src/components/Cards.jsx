@@ -1,11 +1,12 @@
 // Import useState and useEffect
 import React, {useState, useEffect} from 'react';
 
-const Cards = () => {
+const Cards = ({ setScore, score, highScore, setHighScore }) => {
 
     const [characters, setCharacters] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [clickedCards, setClickedCards] = useState([]); // store selected cards
     const targetNames = [
         "Aang",
         "Katara",
@@ -17,12 +18,14 @@ const Cards = () => {
         "Iroh",
         "Suki",
         "Azula",
-        "Bumi",
+        "Bumi (King of Omashu)",
         "Ty Lee",
         "Jet",
         "Mai",
         "Ozai",
         "Yue",
+        "Cabbage merchant",
+        "Roku",
   ]; 
 
   useEffect(() => {
@@ -40,8 +43,6 @@ const Cards = () => {
         // Filter characters based on the targetNames array
         const filteredCharacters = result.filter(character => targetNames.includes(character.name));
 
-        console.log('Filtered Characters:', filteredCharacters);
-
         setCharacters(filteredCharacters);
         
       } catch (error) {
@@ -53,7 +54,27 @@ const Cards = () => {
 
     fetchData();
   }, [targetNames]);
+  const handleClick = (id) => {
+    if(!clickedCards.includes(id)) {
+        setClickedCards([...clickedCards, id])
+        setScore(score + 1)
+        if(clickedCards.length+1 === targetNames.length) {
+            alert("You Win!")
+            setScore(0)
+            setClickedCards([])
+        }
+    } else {
+        alert('You Lose')
+        if (score > highScore) {
+            setHighScore(score)
+        }
+        setScore(0)
+        setClickedCards([])
+    }
 
+    console.log(clickedCards.length)
+    
+  };
   if (loading) {
     return <p>Loading...</p>
   }
@@ -62,17 +83,19 @@ const Cards = () => {
     return <p>Error: {error.message}</p>;
   }
 
+
   return (
-    <div className="App">
-      <h1>Characters</h1>
-      <div>
-      {characters.map((character) => (
-        <div key={character._id}>
-          <h2>{character.name}</h2>
-          <img src={character.photoUrl} alt={character.name} />
+    <div className='Board'>
+        <div className='card-grid'>
+
+            {characters.map((character) => (
+                <div className='image' key={character._id}>
+                    <img src={character.photoUrl} alt={character.name} onClick={() => handleClick(character._id)} />
+                </div>
+            ))}
+
         </div>
-      ))}
-    </div>
+        
     </div>
   );
 }
