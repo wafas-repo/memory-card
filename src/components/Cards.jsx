@@ -28,6 +28,40 @@ const Cards = ({ setScore, score, highScore, setHighScore }) => {
         "Roku",
   ]; 
 
+  const shuffleArray = (array) => {
+    // Create a copy of the array to avoid mutating the original
+    const shuffledArray = [...array];
+    
+    // Fisher-Yates shuffle algorithm
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+    }
+
+    return shuffledArray;
+  };
+
+  const handleClick = (id) => {
+    if(!clickedCards.includes(id)) {
+        setClickedCards([...clickedCards, id])
+        setScore(score + 1)
+        if(clickedCards.length+1 === targetNames.length) {
+            alert("You Win!")
+            setScore(0)
+            setClickedCards([])
+        }
+        
+    } else {
+        alert('You Lose')
+        if (score > highScore) {
+            setHighScore(score)
+        }
+        setScore(0)
+        setClickedCards([])
+    } 
+    setCharacters(shuffleArray(characters));
+  };
+
   useEffect(() => {
     
     const url = "https://last-airbender-api.fly.dev/api/v1/characters?perPage=497";
@@ -53,28 +87,9 @@ const Cards = ({ setScore, score, highScore, setHighScore }) => {
     };
 
     fetchData();
-  }, [targetNames]);
-  const handleClick = (id) => {
-    if(!clickedCards.includes(id)) {
-        setClickedCards([...clickedCards, id])
-        setScore(score + 1)
-        if(clickedCards.length+1 === targetNames.length) {
-            alert("You Win!")
-            setScore(0)
-            setClickedCards([])
-        }
-    } else {
-        alert('You Lose')
-        if (score > highScore) {
-            setHighScore(score)
-        }
-        setScore(0)
-        setClickedCards([])
-    }
+  }, []);
 
-    console.log(clickedCards.length)
-    
-  };
+  
   if (loading) {
     return <p>Loading...</p>
   }
