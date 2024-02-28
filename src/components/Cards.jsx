@@ -1,10 +1,14 @@
 // Import useState and useEffect
 import React, {useState, useEffect} from 'react';
+import winGif from '../assets/images/win.gif'
+import loseGif from '../assets/images/lose.gif'
 
 const Cards = ({ setScore, score, highScore, setHighScore }) => {
 
     const [characters, setCharacters] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [won, setWon] = useState(false)
+    const [lost, setLost] = useState(false)
     const [error, setError] = useState(null);
     const [clickedCards, setClickedCards] = useState([]); // store selected cards
     const targetNames = [
@@ -28,6 +32,10 @@ const Cards = ({ setScore, score, highScore, setHighScore }) => {
         "Roku",
   ]; 
 
+  const overlay = document.querySelector(".overlay");
+  const winPopup = document.querySelector(".win");
+  const losePopup = document.querySelector(".lose")
+
   const shuffleArray = (array) => {
     // Create a copy of the array to avoid mutating the original
     const shuffledArray = [...array];
@@ -41,25 +49,45 @@ const Cards = ({ setScore, score, highScore, setHighScore }) => {
     return shuffledArray;
   };
 
+  const win = () => {
+    overlay.classList.add("active");
+    winPopup.classList.add("active");
+
+    setWon(true);
+  };
+
+  const lose = () => {
+    overlay.classList.add("active");
+    losePopup.classList.add("active");
+
+    setLost(true);
+  }
+
   const handleClick = (id) => {
     if(!clickedCards.includes(id)) {
         setClickedCards([...clickedCards, id])
         setScore(score + 1)
         if(clickedCards.length+1 === targetNames.length) {
-            alert("You Win!")
-            setScore(0)
-            setClickedCards([])
+            win();
         }
         
     } else {
-        alert('You Lose')
+        lose();
         if (score > highScore) {
             setHighScore(score)
         }
-        setScore(0)
-        setClickedCards([])
     } 
     setCharacters(shuffleArray(characters));
+  };
+
+  const playAgain = () => {
+    setScore(0);
+    setClickedCards([]);
+    setWon(false);
+    setCharacters(shuffleArray(characters));
+    overlay.classList.remove("active");
+    winPopup.classList.remove("active");
+    losePopup.classList.remove("active");
   };
 
   useEffect(() => {
@@ -100,18 +128,38 @@ const Cards = ({ setScore, score, highScore, setHighScore }) => {
 
 
   return (
-    <div className='Board'>
-        <div className='card-grid'>
+    <>
+        <div className='Board'>
+            <div className='card-grid'>
 
-            {characters.map((character) => (
-                <div className='image' key={character._id}>
-                    <img src={character.photoUrl} alt={character.name} onClick={() => handleClick(character._id)} />
-                </div>
-            ))}
+                {characters.map((character) => (
+                    <div className='image' key={character._id}>
+                        <img src={character.photoUrl} alt={character.name} onClick={() => handleClick(character._id)} />
+                    </div>
+                ))}
 
+            </div>
         </div>
-        
-    </div>
+        <div className="popup">
+            <div className="win">
+                <h2>You Win!</h2>
+                <img src={winGif}></img>
+                <div>
+                    <button >Menu</button>
+                    <button onClick={playAgain}>Play Again</button>
+                </div>
+            </div>
+            <div className="lose">
+                <h2>You Lose!</h2>
+                <img src={loseGif}></img>
+                <div>
+                    <button >Menu</button>
+                    <button onClick={playAgain} >Play Again</button>
+                </div>
+            </div>
+            <div className="overlay"></div>
+        </div>
+    </>
   );
 }
 

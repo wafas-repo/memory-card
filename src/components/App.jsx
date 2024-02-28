@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import '../styles/App.css'
 import Header from './Header'
 import PlayView from './PlayView'
+import Footer from './Footer'
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
     <>
       <Header score={score} highScore={highScore} />
       <PlayView setScore={setScore} score={score} highScore={highScore} setHighScore={setHighScore} />
+      <Footer />
 
     </>
   )

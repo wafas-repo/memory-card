@@ -1,6 +1,7 @@
 body {
     margin: 0;
     padding: 0;
+    background-color: aliceblue;
 }
 
 header {
@@ -8,9 +9,10 @@ header {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 2rem 3rem;
-    height: 10vh;
+    padding: 1rem 3rem;
+    height: 8vh;
     background-color: aliceblue;
+    border-bottom: #fff solid 1px;
   }
   
   header h1 {
@@ -45,7 +47,6 @@ header {
   }
 
   .Board {
-    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -57,6 +58,7 @@ header {
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: repeat(3, 1fr);
     grid-gap: 2rem;
+    padding: 2em;
 
         .image {
             position: relative;
@@ -69,4 +71,203 @@ header {
         height: 90%;
         width: 90%;
   }
+
+  .overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+  }
+  
+  .overlay.active {
+    display: block;
+  }
+
+  .win {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    z-index: 2;
+    background-color: white;
+    color: rgb(119, 196, 226);
+    border-radius: 10px;
+    padding: 5px 40px;
+    text-align: center;
+    height: 14em;
+    width: 15em;
+    font-size: 2rem;
+    transition: 0.3s;
+  }
+
+  .lose {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    z-index: 2;
+    background-color: white;
+    color: rgb(207, 17, 33);
+    border-radius: 10px;
+    padding: 5px 40px;
+    text-align: center;
+    height: 14em;
+    width: 15em;
+    font-size: 2rem;
+    transition: 0.3s;
+  }
+
+  .win button {
+    padding: 12px 18px;
+    margin: 5px;
+    background-color: #252627;
+    border: 2px solid #383838;
+    border-radius: 10px;
+    font-size: 1rem;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.1s ease, box-shadow 0.3s ease;
+  }
+
+  .lose button {
+    padding: 12px 18px;
+    margin: 5px;
+    background-color: #252627;
+    border: 2px solid #383838;
+    border-radius: 10px;
+    font-size: 1rem;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.1s ease, box-shadow 0.3s ease;
+
+  }
+  
+  .win button:hover {
+    background-color: #564e58;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .lose button:hover {
+    background-color: #564e58;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .win.active {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .lose.active {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  footer {
+    display: flex!important;
+    flex-direction: row!important;
+    align-items: center!important;
+    justify-content: space-between!important;
+    padding: 2rem!important;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#contact-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+}
+
+#image-container {
+    width: 50px;
+    height: 50px;
+}
+
+.github-icon {
+    transition: transform 0.5s ease-in-out;
+}
+
+.github-icon:hover {
+    transform: rotate(180deg);
+}
+
+.control-button {
+    background-size: cover;
+    background-position: center;
+    border: none;
+    cursor: pointer;
+    background-color: #fff;
+    opacity: 0.5;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    padding: 10px;
+    transition: transform 0.5s ease-in-out;
+}
+
+.control-button:hover {
+    transform: scale(1.1);
+}
+
+.music-playing {
+    background-image: url('../assets/images/music-on-icon.svg');
+}
+
+.music-paused {
+    background-image: url('../assets/images/music-off-icon.svg')!important;
+}
+
+.help-closed {
+    background-image: url('../assets/images/help-icon.svg');
+}
+
+.help-opened {
+    background-image: url('../assets/images/cross-icon.svg');
+}
+
+#help-container {
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: aliceblue;
+    border-radius: 10px;
+    padding: 10px;
+    border: #fff solid 3px;
+}
+
+.help-text-container {
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+}
+
+.help-title {
+    color: black;
+    text-align: center;
+}
+
+.help-text {
+    color: black;
+    text-align: center;
+}
+
   
