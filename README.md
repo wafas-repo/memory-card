@@ -18,7 +18,7 @@ A card game that tests your memory. Make sure you don't click any card twice!
 ## Description
 
 This project was made to allow myself to get used to using React hooks, mainly useEffect() to fetch data from an api
-and render the information to my site! After building this project I can confident;y say my React skills have improved.
+and render the information to my site! After building this project I can confidently say my React skills have improved.
 
 ## Features
 
